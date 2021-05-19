@@ -85,56 +85,65 @@
         form.addEventListener('submit', (event) => {
             // prevents auto submit of the page without getting full details of the form
             event.preventDefault();
-
-            // function to check if email is valid
-            const isEmail = (emailVal) => {
-                // checks the user doesn't begin the email address with @ symbol
-                var atSymbol = emailVal.indexOf("@");
-                if (atSymbol < 1)
-                    return false;
-
-                // checks if the user doesn't end the email with .
-                var dot = emailVal.lastIndexOf(".")
-                if(dot <= atSymbol + 2)
-                    return false;
-                // checks if the user doesn't end the email with the second last character being a .
-                if(dot === emailVal.length - 1)
-                    return false;
-            }
-
-            // function that validates the data
-            const validate = () => {
-                // trims the whitespaces
-                // a space will not be counted as a character length
-                const usernameVal = username.value.trim();
-                const emailVal = email.value.trim();
-                const phoneVal = phone.value.trim();
-                const passwordVal = password.value.trim();
-                const cpasswordVal = password.value.trim();
-
-                // validate username
-                // if username is left blank then display the following message
-                if (usernameVal === "") {
-                    setErrorMessage(username, 'username cannot be blank')
-                    // else if the username is less than 2 character display the following message
-                } else if (usernameVal.length <= 2) {
-                    setErrorMessage(username, 'username need to be min 3 characters')
-                    // else display a success message
-                } else {
-                    setSuccessMessage(username);
-                }
-
-                // validate email 
-                if (emailVal === '') {
-                    setErrorMessage(email, 'email cannot be blank');
-                    // if the function isn't satisified
-                } else if (!isEmail(emailVal)) {
-                    setErrorMessage(emailVal, 'Not a valid email address');
-                } else {
-                    setSuccessMessage(email);
-                }
-            }
         })
+
+        // function to check if email is valid
+        const isEmail = (emailVal) => {
+            // checks the user doesn't begin the email address with @ symbol
+            var atSymbol = emailVal.indexOf("@");
+            if (atSymbol < 1)
+                return false;
+
+            // checks if the user doesn't end the email with .
+            var dot = emailVal.lastIndexOf(".")
+            if (dot <= atSymbol + 2)
+                return false;
+            // checks if the user doesn't end the email with the second last character being a .
+            if (dot === emailVal.length - 1)
+                return false;
+            return true;
+        }
+
+        // function that validates the data
+        const validate = () => {
+            // trims the whitespaces
+            // a space will not be counted as a character length
+            const usernameVal = username.value.trim();
+            const emailVal = email.value.trim();
+            const phoneVal = phone.value.trim();
+            const passwordVal = password.value.trim();
+            const cpasswordVal = password.value.trim();
+
+            // validate username
+            // if username is left blank then display the following message
+            if (usernameVal === "") {
+                setErrorMessage(username, 'username cannot be blank')
+                // else if the username is less than 2 character display the following message
+            } else if (usernameVal.length <= 2) {
+                setErrorMessage(username, 'username need to be min 3 characters')
+                // else display a success message
+            } else {
+                setSuccessMessage(username);
+            }
+
+            // validate email 
+            if (emailVal === '') {
+                setErrorMessage(email, 'email cannot be blank');
+                // if the function isn't satisified
+            } else if (!isEmail(emailVal)) {
+                setErrorMessage(emailVal, 'Not a valid email address');
+            } else {
+                setSuccessMessage(email);
+            }
+        }
+
+        function setErrorMessage(input, errorMsgs) {
+            const formControl = input.parentElement;
+
+            const small = formControl.querySelector('small');
+
+            small.innerText = errorMsgs;
+        }
     </script>
 </body>
 
